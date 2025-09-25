@@ -34,6 +34,8 @@ public:
     QColor                            overlayColor;
     QColor                            disabledColor;
     QColor                            disabledBackgroundColor;
+    QColor                            checkedColor;
+    QColor                            checkedBackgroundColor;
     qreal                             fixedRippleRadius;
     qreal                             cornerRadius;
     qreal                             baseOpacity;

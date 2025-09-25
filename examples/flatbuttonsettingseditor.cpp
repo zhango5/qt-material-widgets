@@ -211,10 +211,16 @@ void FlatButtonSettingsEditor::selectColor()
             ui->overlayColorLineEdit->setText(color.name(QColor::HexRgb));
         } else if ("disabledFgColorToolButton" == senderName) {
             m_button->setDisabledForegroundColor(color);
-            ui->disableFgColorLineEdit->setText(color.name(QColor::HexRgb));
+            ui->disabledFgColorLineEdit->setText(color.name(QColor::HexRgb));
         } else if ("disabledBgColorToolButton" == senderName) {
             m_button->setDisabledBackgroundColor(color);
             ui->disabledBgColorLineEdit->setText(color.name(QColor::HexRgb));
+        } else if ("checkedFgColorToolButton" == senderName) {
+            m_button->setCheckedForegroundColor(color);
+            ui->checkedFgColorLineEdit->setText(color.name(QColor::HexRgb));
+        } else if ("checkedBgColorToolButton" == senderName) {
+            m_button->setCheckedBackgroundColor(color);
+            ui->checkedBgColorLineEdit->setText(color.name(QColor::HexRgb));
         }
     }
     setupForm();
@@ -303,6 +309,8 @@ void FlatButtonSettingsEditor::init()
     connect(ui->backgroundColorToolButton, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
     connect(ui->disabledFgColorToolButton, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
     connect(ui->disabledBgColorToolButton, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
+    connect(ui->checkedFgColorToolButton, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
+    connect(ui->checkedBgColorToolButton, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
     connect(ui->overlayColorToolButton, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
     connect(ui->cornerRadiusSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateWidget()));
     connect(ui->overlayOpacityDoubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateWidget()));

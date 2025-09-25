@@ -59,7 +59,7 @@ void QtMaterialFlatButtonPrivate::init()
     q->setMouseTracking(true);
 
     QFont font("Roboto", fontSize, QFont::Medium);
-    font.setCapitalization(QFont::AllUppercase);
+    font.setCapitalization(QFont::MixedCase);
     q->setFont(font);
 
     QPainterPath path;
@@ -282,6 +282,48 @@ QColor QtMaterialFlatButton::disabledBackgroundColor() const
         return QtMaterialStyle::instance().themeColor("disabled3");
     } else {
         return d->disabledBackgroundColor;
+    }
+}
+
+void QtMaterialFlatButton::setCheckedForegroundColor(const QColor& color)
+{
+    Q_D(QtMaterialFlatButton);
+
+    d->checkedColor = color;
+
+    MATERIAL_DISABLE_THEME_COLORS
+    update();
+}
+
+QColor QtMaterialFlatButton::checkedForegroundColor() const
+{
+    Q_D(const QtMaterialFlatButton);
+
+    if (d->useThemeColors || !d->checkedColor.isValid()) {
+        return foregroundColor();
+    } else {
+        return d->checkedColor;
+    }
+}
+
+void QtMaterialFlatButton::setCheckedBackgroundColor(const QColor& color)
+{
+    Q_D(QtMaterialFlatButton);
+
+    d->checkedBackgroundColor = color;
+
+    MATERIAL_DISABLE_THEME_COLORS
+    update();
+}
+
+QColor QtMaterialFlatButton::checkedBackgroundColor() const
+{
+    Q_D(const QtMaterialFlatButton);
+
+    if (d->useThemeColors || !d->checkedBackgroundColor.isValid()) {
+        return backgroundColor();
+    } else {
+        return d->checkedBackgroundColor;
     }
 }
 
@@ -627,8 +669,8 @@ void QtMaterialFlatButton::paintBackground(QPainter *painter)
     }
 
     if (isCheckable() && checkedProgress > 0) {
-        const qreal q = Qt::TransparentMode == d->bgMode ? 0.45 : 0.7;
-        brush.setColor(foregroundColor());
+        const qreal q = Qt::TransparentMode == d->bgMode ? 0.45 : 1.0;
+        brush.setColor(checkedBackgroundColor());
         painter->setOpacity(q*checkedProgress);
         painter->setBrush(brush);
         QRect r(rect());
@@ -679,7 +721,7 @@ void QtMaterialFlatButton::paintForeground(QPainter *painter)
         if (isCheckable() && progress > 0) {
             QColor source = foregroundColor();
             QColor dest = Qt::TransparentMode == d->bgMode ? Qt::white
-                                                           : backgroundColor();
+                                                           : checkedForegroundColor();
             if (qFuzzyCompare(1, progress)) {
                 painter->setPen(dest);
             } else {

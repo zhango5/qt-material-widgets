@@ -47,6 +47,12 @@ public:
     void setDisabledBackgroundColor(const QColor &color);
     QColor disabledBackgroundColor() const;
 
+    void setCheckedForegroundColor(const QColor &color);
+    QColor checkedForegroundColor() const;
+
+    void setCheckedBackgroundColor(const QColor &color);
+    QColor checkedBackgroundColor() const;
+
     void setFontSize(qreal size);
     qreal fontSize() const;
 
