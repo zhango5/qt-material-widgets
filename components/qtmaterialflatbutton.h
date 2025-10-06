@@ -56,6 +56,8 @@ public:
     void setFontSize(qreal size);
     qreal fontSize() const;
 
+    void setIconPadding(int padding);
+
     void setHaloVisible(bool visible);
     bool isHaloVisible() const;
 

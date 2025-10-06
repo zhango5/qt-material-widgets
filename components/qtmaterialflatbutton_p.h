@@ -40,6 +40,7 @@ public:
     qreal                             cornerRadius;
     qreal                             baseOpacity;
     qreal                             fontSize;
+    int                               iconPadding;
     bool                              useThemeColors;
     bool                              useFixedRippleRadius;
     bool                              haloVisible;

@@ -50,6 +50,7 @@ void QtMaterialFlatButtonPrivate::init()
     cornerRadius         = 3;
     baseOpacity          = 0.13;
     fontSize             = 10;        // 10.5;
+    iconPadding          = 12;
     useThemeColors       = true;
     useFixedRippleRadius = false;
     haloVisible          = true;
@@ -347,6 +348,15 @@ qreal QtMaterialFlatButton::fontSize() const
     return d->fontSize;
 }
 
+void QtMaterialFlatButton::setIconPadding(int padding)
+{
+    Q_D(QtMaterialFlatButton);
+
+    d->iconPadding = padding;
+
+    update();
+}
+
 void QtMaterialFlatButton::setHaloVisible(bool visible)
 {
     Q_D(QtMaterialFlatButton);
@@ -502,6 +512,8 @@ Qt::Alignment QtMaterialFlatButton::textAlignment() const
  */
 QSize QtMaterialFlatButton::sizeHint() const
 {
+    Q_D(const QtMaterialFlatButton);
+
     ensurePolished();
 
     QSize label(fontMetrics().size(Qt::TextSingleLine, text()));
@@ -509,7 +521,7 @@ QSize QtMaterialFlatButton::sizeHint() const
     int w = 20 + label.width();
     int h = label.height();
     if (!icon().isNull()) {
-        w += iconSize().width() + QtMaterialFlatButton::IconPadding;
+        w += iconSize().width() + d->iconPadding;
         h = qMax(h, iconSize().height());
     }
     return QSize(w, 20 + h);
@@ -747,7 +759,7 @@ void QtMaterialFlatButton::paintForeground(QPainter *painter)
     QSize textSize(fontMetrics().size(Qt::TextSingleLine, text()));
     QSize base(size()-textSize);
 
-    const int iw = iconSize().width() + IconPadding;
+    const int iw = iconSize().width() + d->iconPadding;
     QPoint pos(Qt::AlignLeft == d->textAlignment ? 12 : (base.width()-iw)/2, 0);
 
     QRect textGeometry(pos + QPoint(0, base.height()/2), textSize);
@@ -756,7 +768,7 @@ void QtMaterialFlatButton::paintForeground(QPainter *painter)
     if (Material::LeftIcon == d->iconPlacement) {
         textGeometry.translate(iw, 0);
     } else {
-        iconGeometry.translate(textSize.width() + IconPadding, 0);
+        iconGeometry.translate(textSize.width() + d->iconPadding, 0);
     }
 
     painter->drawText(textGeometry, Qt::AlignCenter, text());
